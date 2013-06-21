@@ -9,7 +9,7 @@ package Apache2::AuthCookieLDAP;
 use strict;
 use warnings;
 use 5.010_000;
-our $VERSION = '1.10';
+our $VERSION = '1.11';
 
 use Apache2::AuthCookie;
 use base qw(Apache2::AuthCookie);
@@ -409,7 +409,7 @@ Apache2::AuthCookieLDAP - An Apache2::AuthCookie backend for LDAP based authenti
 
 =head1 VERSION
 
-Version 1.10
+Version 1.11
 
 =head1 COMPATIBILITY
 

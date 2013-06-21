@@ -1,4 +1,7 @@
 Revision history for Apache2::AuthCookieLDAP
 
-1.10
+1.11  2013-06-22
+     - Fixed package permissions
+
+1.10  2013-06-21
      - Initial CPAN upload
