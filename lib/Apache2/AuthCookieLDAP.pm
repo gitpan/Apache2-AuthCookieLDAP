@@ -9,7 +9,7 @@ package Apache2::AuthCookieLDAP;
 use strict;
 use warnings;
 use 5.010_000;
-our $VERSION = '1.11';
+our $VERSION = '1.12';
 
 use Apache2::AuthCookie;
 use base qw(Apache2::AuthCookie);
@@ -308,6 +308,13 @@ sub check_expire_time {
     my ( $self, $r, $session_time ) = @_;
 
     my $lifetime = $self->config( $r, C_SESSION_LIFETIME );
+    return 0 if $lifetime =~ /^\s*forever\s*$/i;
+
+    unless ( $lifetime =~ /^\s*\d{1,4}-\d{1,2}-\d{1,2}-\d{1,2}\s*$/ ) {
+        $self->fatal( $r, "Incorrect session lifetime format '$lifetime'" );
+        return 1;
+    }
+
     my ( $d, $h, $m, $s ) = split '-', $lifetime;
     my $expire_time = $session_time + $d * 86400 + $h * 3600 + $m * 60 + $s;
 
@@ -409,7 +416,7 @@ Apache2::AuthCookieLDAP - An Apache2::AuthCookie backend for LDAP based authenti
 
 =head1 VERSION
 
-Version 1.11
+Version 1.12
 
 =head1 COMPATIBILITY
 
@@ -526,7 +533,7 @@ Use your own secret key !!!DONT USE THE ONE FROM THE EXAMPLE!!!
 
 =item C<MyAuth_SessionLifetime> [optional, default: 00-24-00-00]
 
-Format is: days-hours-minutes-seconds
+Format is: days-hours-minutes-seconds or 'forever' for endless sessions
 
 =item C<MyAuth_LDAPURI>
 
@@ -663,7 +670,7 @@ Decrypts $str and returns the provided encrypted session string.
 =head2 check_expire_time($r, $session_time)
 
 Checks the provided session time (unixtime) with the current time
-and returns '1' if the session time is valid still or '0' if passed.
+and returns '0' if the session time is still valid or '1' if passed.
 
 =head2 authen_cred($r, $user, $password, @extra_data) 
 
@@ -689,7 +696,9 @@ You can subclass the module and override any of the available methods.
 
 =head1 CREDITS
 
-Used "SecretKey", "Lifetime" Apache config directives from L<Apache2::AuthCookieDBI> to keep it common.
+"SecretKey", "Lifetime" Apache config directive names and their definition style 
+similar to Apache2::AuthCookieDBI to keep it common for those 
+who use both of the modules.
 
 Authors of Apache2::AuthCookieDBI 
 
@@ -702,6 +711,11 @@ Copyright (C) 2013 Kirill Solomko
 =head1 LICENSE
 
 This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+
+=head1 BUGS
+
+Please report any bugs or feature requests through the web interface at:
+ http://rt.cpan.org/Public/Dist/Display.html?Name=Apache2-AuthCookieLDAP
 
 =head1 TODO
 

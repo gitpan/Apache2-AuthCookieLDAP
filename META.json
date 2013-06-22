@@ -36,7 +36,7 @@
    "provides" : {
       "Apache2::AuthCookieLDAP" : {
          "file" : "lib/Apache2/AuthCookieLDAP.pm",
-         "version" : "1.11"
+         "version" : "1.12"
       }
    },
    "release_status" : "stable",
@@ -45,5 +45,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "1.11"
+   "version" : "1.12"
 }

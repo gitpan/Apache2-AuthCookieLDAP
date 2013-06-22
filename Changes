@@ -1,5 +1,10 @@
 Revision history for Apache2::AuthCookieLDAP
 
+1.12  2013-06-22
+     - Added '_SessionLifetime' format check
+     - Added '_SessionLifetime' "forever" value
+     - Updated pod
+
 1.11  2013-06-22
      - Fixed package permissions
 
