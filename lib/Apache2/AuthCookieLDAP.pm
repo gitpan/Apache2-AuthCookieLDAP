@@ -9,7 +9,7 @@ package Apache2::AuthCookieLDAP;
 use strict;
 use warnings;
 use 5.010_000;
-our $VERSION = '1.12';
+our $VERSION = '1.13';
 
 use Apache2::AuthCookie;
 use base qw(Apache2::AuthCookie);
@@ -416,7 +416,7 @@ Apache2::AuthCookieLDAP - An Apache2::AuthCookie backend for LDAP based authenti
 
 =head1 VERSION
 
-Version 1.12
+Version 1.13
 
 =head1 COMPATIBILITY
 
@@ -438,13 +438,15 @@ Apache2::AuthCookie config (check L<Apache2::AuthCookie> documentation for the a
 To make "LogoutURL" working you can subsclass Apache2::ApacheCookieLDAP and provide it with:
 
     sub logout {
-        my ($self, $r) = @_;
+        my ( $self, $r ) = @_;
         $self->SUPER::logout($r);
-        my $logout_url = $self->_dir_config_var($r, 'LogoutURL');
+        my $logout_url = $r->dir_config( $r->auth_name . 'LogoutURL' );
         if ($logout_url) {
-            $r->headers_out->set(Location => $logout_url);
+            $r->headers_out->set( Location => $logout_url );
             $r->status(Apache2::Const::REDIRECT);
         }
+
+        return Apache2::Const::REDIRECT;
     }
   
 Apache2::AuthCookieLDAP config

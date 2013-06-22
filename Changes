@@ -1,5 +1,8 @@
 Revision history for Apache2::AuthCookieLDAP
 
+1.13  2013-06-22
+     - Fixed 'logout()' example in the pod
+
 1.12  2013-06-22
      - Added '_SessionLifetime' format check
      - Added '_SessionLifetime' "forever" value
