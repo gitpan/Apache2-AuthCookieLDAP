@@ -15,7 +15,7 @@ name: Apache2-AuthCookieLDAP
 provides:
   Apache2::AuthCookieLDAP:
     file: lib/Apache2/AuthCookieLDAP.pm
-    version: 1.13
+    version: 1.14
 requires:
   Apache2::AuthCookie: 3.19
   Apache2::Connection: 0
@@ -28,4 +28,4 @@ requires:
   mod_perl2: 1.999022
 resources:
   license: http://dev.perl.org/licenses/
-version: 1.13
+version: 1.14

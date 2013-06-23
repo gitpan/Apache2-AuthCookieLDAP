@@ -9,7 +9,7 @@ package Apache2::AuthCookieLDAP;
 use strict;
 use warnings;
 use 5.010_000;
-our $VERSION = '1.13';
+our $VERSION = '1.14';
 
 use Apache2::AuthCookie;
 use base qw(Apache2::AuthCookie);
@@ -416,7 +416,7 @@ Apache2::AuthCookieLDAP - An Apache2::AuthCookie backend for LDAP based authenti
 
 =head1 VERSION
 
-Version 1.13
+Version 1.14
 
 =head1 COMPATIBILITY
 
@@ -643,17 +643,17 @@ Performs Net::LDAP->bind($base, password => $password).
 
 =head2 rlog($r, $msg)
 
-Logs $msg using $r->log_rerror and the currently set debug level.
+Logs $msg using $r->log_rerror and the current debug log level.
 
 =head2 fatal($r, $msg)
 
-Logs $msg using $r->log_rerror and the currently set error level.
+Logs $msg using $r->log_rerror and the current error log level.
 
 =head2 encode_string($r, $msg)
 
 Encodes the specified string into a hex string.
 
-=head2 encode_string($r, $msg)
+=head2 decode_string($r, $msg)
 
 Decodes the specified hex string and returns a string.
 
@@ -676,7 +676,7 @@ and returns '0' if the session time is still valid or '1' if passed.
 
 =head2 authen_cred($r, $user, $password, @extra_data) 
 
-This is the base method of Apache::AuthCookie and is used to
+This is the overridden method of Apache::AuthCookie and is used to
 authenticate $user with the provided $password
 
 Returns the encrypted session key in case of successfull authentication.
@@ -685,8 +685,8 @@ Please follow to Apache2::AuthCookie if you need more information about the meth
 
 =head2 authen_ses_key($r, $session_key)
 
-This is the base method of Apache::AuthCookie and is used to
-check the provided $session_key.
+This is the overridden method of Apache::AuthCookie and is used to
+validate the provided $session_key. 
 
 Returns the authenticated username in case of success or redirects to the login page otherwise.
 
@@ -699,7 +699,7 @@ You can subclass the module and override any of the available methods.
 =head1 CREDITS
 
 "SecretKey", "Lifetime" Apache config directive names and their definition style 
-similar to Apache2::AuthCookieDBI to keep it common for those 
+are similar to Apache2::AuthCookieDBI to keep it common for those 
 who use both of the modules.
 
 Authors of Apache2::AuthCookieDBI 
