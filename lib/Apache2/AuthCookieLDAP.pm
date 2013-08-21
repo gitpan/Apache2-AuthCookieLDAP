@@ -9,7 +9,7 @@ package Apache2::AuthCookieLDAP;
 use strict;
 use warnings;
 use 5.010_000;
-our $VERSION = '1.14';
+our $VERSION = '1.15';
 
 use Apache2::AuthCookie;
 use base qw(Apache2::AuthCookie);
@@ -416,7 +416,7 @@ Apache2::AuthCookieLDAP - An Apache2::AuthCookie backend for LDAP based authenti
 
 =head1 VERSION
 
-Version 1.14
+Version 1.15
 
 =head1 COMPATIBILITY
 
@@ -548,7 +548,7 @@ Use ldaps:// for secure connections (if your LDAP server supports it)
 =item C<MyAuth_Base> 
 
 LDAP Base. Please note that '%USER%' macro is substituted in the request
-with a username that is being authenticated
+with a username that is being authenticated.
 
 Example: uid=%USER%,ou=staff,dc=company,dc=com
 
@@ -569,6 +569,16 @@ a password here to bind with.
 An encryption method used for the session key.
 
 Supported methods: 'des', 'idea', 'blowfish', 'blowfish_pp'
+
+=item C<MyAuth_Filter> [optinal, default: '(uid=%USER%)']
+
+You can additionally check if a user belongs to a specific group or has 
+specific LDAP attributes. Where '%USER%' macro is substituted in the request
+with a username that is being authenticated.
+
+For instance: (&(uid=%USER%)(objectClass=posixAccount))
+
+perldoc Net::LDAP::Filter for additional info
 
 =item C<MyAuth_DebugLogLevel> [optional, default: 'alert']
 
